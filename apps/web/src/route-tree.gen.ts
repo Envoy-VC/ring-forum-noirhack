@@ -11,20 +11,20 @@
 // Import Routes
 
 import { Route as rootRoute } from './app/__root';
-import { Route as CommunitiescommunityNameImport } from './app/communities$communityName';
 import { Route as IndexImport } from './app/index';
+import { Route as CommunitiesCommunityNameImport } from './app/communities.$communityName';
 
 // Create/Update Routes
-
-const CommunitiescommunityNameRoute = CommunitiescommunityNameImport.update({
-  id: '/communities$communityName',
-  path: '/communities$communityName',
-  getParentRoute: () => rootRoute,
-} as any);
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any);
+
+const CommunitiesCommunityNameRoute = CommunitiesCommunityNameImport.update({
+  id: '/communities/$communityName',
+  path: '/communities/$communityName',
   getParentRoute: () => rootRoute,
 } as any);
 
@@ -39,11 +39,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport;
       parentRoute: typeof rootRoute;
     };
-    '/communities$communityName': {
-      id: '/communities$communityName';
-      path: '/communities$communityName';
-      fullPath: '/communities$communityName';
-      preLoaderRoute: typeof CommunitiescommunityNameImport;
+    '/communities/$communityName': {
+      id: '/communities/$communityName';
+      path: '/communities/$communityName';
+      fullPath: '/communities/$communityName';
+      preLoaderRoute: typeof CommunitiesCommunityNameImport;
       parentRoute: typeof rootRoute;
     };
   }
@@ -53,37 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
-  '/communities$communityName': typeof CommunitiescommunityNameRoute;
+  '/communities/$communityName': typeof CommunitiesCommunityNameRoute;
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
-  '/communities$communityName': typeof CommunitiescommunityNameRoute;
+  '/communities/$communityName': typeof CommunitiesCommunityNameRoute;
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   '/': typeof IndexRoute;
-  '/communities$communityName': typeof CommunitiescommunityNameRoute;
+  '/communities/$communityName': typeof CommunitiesCommunityNameRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/communities$communityName';
+  fullPaths: '/' | '/communities/$communityName';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/communities$communityName';
-  id: '__root__' | '/' | '/communities$communityName';
+  to: '/' | '/communities/$communityName';
+  id: '__root__' | '/' | '/communities/$communityName';
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
-  CommunitiescommunityNameRoute: typeof CommunitiescommunityNameRoute;
+  CommunitiesCommunityNameRoute: typeof CommunitiesCommunityNameRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CommunitiescommunityNameRoute: CommunitiescommunityNameRoute,
+  CommunitiesCommunityNameRoute: CommunitiesCommunityNameRoute,
 };
 
 export const routeTree = rootRoute
@@ -97,14 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/communities$communityName"
+        "/communities/$communityName"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/communities$communityName": {
-      "filePath": "communities$communityName.tsx"
+    "/communities/$communityName": {
+      "filePath": "communities.$communityName.tsx"
     }
   }
 }

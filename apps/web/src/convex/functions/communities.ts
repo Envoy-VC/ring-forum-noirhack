@@ -26,6 +26,25 @@ export const createCommunity = mutation({
   },
 });
 
+export const getCommunity = query({
+  args: {
+    communityName: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const formatted = args.communityName.trim();
+    const community = await ctx.db
+      .query('communities')
+      .withIndex('by_name', (q) => q.eq('name', formatted))
+      .first();
+
+    if (!community) {
+      throw new Error('Community not found');
+    }
+
+    return community;
+  },
+});
+
 export const getPostsForCommunity = query({
   args: {
     communityId: v.id('communities'),
@@ -54,7 +73,7 @@ export const getTotalMembersInCommunity = query({
 
 export const joinCommunity = mutation({
   args: {
-    community: v.string(),
+    communityId: v.id('communities'),
     publicKey: v.string(),
   },
   handler: async (ctx, args) => {
@@ -67,10 +86,7 @@ export const joinCommunity = mutation({
       throw new Error('User not found');
     }
 
-    const community = await ctx.db
-      .query('communities')
-      .withIndex('by_name', (q) => q.eq('name', args.community))
-      .first();
+    const community = await ctx.db.get(args.communityId);
 
     if (!community) {
       throw new Error('Community not found');
@@ -96,7 +112,7 @@ export const joinCommunity = mutation({
 
 export const leaveCommunity = mutation({
   args: {
-    community: v.string(),
+    communityId: v.id('communities'),
     publicKey: v.string(),
   },
   handler: async (ctx, args) => {
@@ -109,10 +125,7 @@ export const leaveCommunity = mutation({
       throw new Error('User not found');
     }
 
-    const community = await ctx.db
-      .query('communities')
-      .withIndex('by_name', (q) => q.eq('name', args.community))
-      .first();
+    const community = await ctx.db.get(args.communityId);
 
     if (!community) {
       throw new Error('Community not found');

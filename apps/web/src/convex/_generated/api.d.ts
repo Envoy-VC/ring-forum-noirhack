@@ -14,7 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as functions_communities from "../functions/communities.js";
-import type * as functions_post from "../functions/post.js";
+import type * as functions_posts from "../functions/posts.js";
 import type * as functions_tags from "../functions/tags.js";
 import type * as functions_users from "../functions/users.js";
 
@@ -28,7 +28,7 @@ import type * as functions_users from "../functions/users.js";
  */
 declare const fullApi: ApiFromModules<{
   "functions/communities": typeof functions_communities;
-  "functions/post": typeof functions_post;
+  "functions/posts": typeof functions_posts;
   "functions/tags": typeof functions_tags;
   "functions/users": typeof functions_users;
 }>;
