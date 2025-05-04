@@ -1,7 +1,9 @@
 import { Button } from '@repo/ui/components/button';
+import { createFileRoute } from '@tanstack/react-router';
 import { Post } from '~/components/post';
 
 const CommunityPage = () => {
+  const { communityName } = Route.useParams();
   return (
     <div className='mx-auto my-12 max-w-screen-xl px-3 py-12'>
       <div className='flex flex-col gap-4'>
@@ -42,4 +44,6 @@ const CommunityPage = () => {
   );
 };
 
-export default CommunityPage;
+export const Route = createFileRoute('/communities$communityName')({
+  component: CommunityPage,
+});

@@ -1,0 +1,70 @@
+import path from 'node:path';
+import tailwindcss from '@tailwindcss/vite';
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import react from '@vitejs/plugin-react';
+import { type Plugin, defineConfig } from 'vite';
+
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+
+import topLevelAwait from 'vite-plugin-top-level-await';
+import wasm from 'vite-plugin-wasm';
+
+const wasmContentTypePlugin: Plugin = {
+  name: 'wasm-content-type-plugin',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      if (req.url?.endsWith('.wasm')) {
+        res.setHeader('Content-Type', 'application/wasm');
+      }
+      next();
+    });
+  },
+};
+
+export default defineConfig({
+  envPrefix: ['VITE_'],
+  plugins: [
+    wasm(),
+    topLevelAwait(),
+    TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
+    react(),
+    tailwindcss(),
+    nodePolyfills({
+      protocolImports: true,
+    }),
+  ],
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+      plugins: [],
+    },
+    include: [
+      '@aztec/aztec.js',
+      'buffer',
+      'process',
+      'stream',
+      'crypto-browserify',
+      'readable-stream',
+      'assert',
+    ],
+  },
+  server: { port: 3000 },
+  publicDir: 'public',
+  define: {
+    'process.env': {},
+    'process.browser': true,
+  },
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './src'),
+      public: path.resolve(__dirname, './public'),
+      buffer: 'buffer',
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      crypto: 'crypto-browserify',
+      assert: 'assert',
+    },
+  },
+});

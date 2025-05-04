@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router';
+
 import {
   CategorySelect,
   CreatePost,
@@ -56,4 +58,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+export const Route = createFileRoute('/')({
+  component: Home,
+});

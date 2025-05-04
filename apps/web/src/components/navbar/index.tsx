@@ -1,5 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
+'use client';
+
+import { Link } from '@tanstack/react-router';
 
 import { Input } from '@repo/ui/components/input';
 
@@ -15,10 +16,11 @@ export const Navbar = () => {
       <div className='relative mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-between gap-4 px-4'>
         <div className='flex flex-row items-center gap-4'>
           <Link
-            href='/'
+            to='/'
             className='flex flex-row items-center gap-2'
           >
-            <Image
+            {/* biome-ignore lint/nursery/noImgElement: <explanation> */}
+            <img
               src={Logo}
               alt='logo'
               width={48}

@@ -1,4 +1,4 @@
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { NuqsAdapter } from 'nuqs/adapters/react';
 import type { PropsWithChildren } from 'react';
 
 export const NuqsProvider = ({ children }: PropsWithChildren) => {

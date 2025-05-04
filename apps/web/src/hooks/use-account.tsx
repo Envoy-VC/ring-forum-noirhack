@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Fr, Point } from '@aztec/aztec.js';
+import { useMutation } from 'convex/react';
+import { api } from '~/convex/_generated/api';
 
 interface Account {
   publicKey: string;
@@ -10,6 +12,7 @@ interface Account {
 }
 
 export const useAccount = () => {
+  const createUser = useMutation(api.functions.users.createUser);
   const [keyPair, setKeyPair] = useLocalStorage<Account | null>(
     'ring-forum-account',
     null
@@ -18,13 +21,16 @@ export const useAccount = () => {
   const account = useMemo(() => {
     if (!keyPair) return null;
     return {
-      publicKey: Fr.fromHexString(keyPair.publicKey),
-      privateKey: Point.fromString(keyPair.privateKey),
+      publicKey: Point.fromString(keyPair.publicKey),
+      privateKey: Fr.fromHexString(keyPair.privateKey),
     };
   }, [keyPair]);
 
   const createAccount = async () => {
     const keyPair = await generateKeyPair();
+    await createUser({
+      publicKey: keyPair.publicKey.toString(),
+    });
     setKeyPair({
       publicKey: keyPair.publicKey.toString(),
       privateKey: keyPair.privateKey.toString(),

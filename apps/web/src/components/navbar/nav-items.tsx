@@ -1,8 +1,7 @@
 'use client';
 
 import { cn } from '@repo/ui/lib/utils';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from '@tanstack/react-router';
 import { AudioLinesIcon, HomeIcon, TrendingUpIcon, UsersIcon } from '../icons';
 
 const navLinks = [
@@ -31,7 +30,7 @@ const navLinks = [
 ];
 
 export const NavItems = () => {
-  const path = usePathname();
+  const path = useLocation();
 
   return (
     <div className='flex flex-row items-center gap-2 px-12'>
@@ -39,12 +38,12 @@ export const NavItems = () => {
         const Icon = link.icon;
         return (
           <Link
-            href={link.href}
+            to={link.href}
             type='button'
             key={link.title}
             className={cn(
               '!p-0 !m-0 !size-9 flex items-center justify-center rounded-lg transition-colors duration-200 hover:bg-accent',
-              path === link.href && !link.disabled && 'bg-accent'
+              path.href === link.href && !link.disabled && 'bg-accent'
             )}
           >
             <Icon size={20} />
