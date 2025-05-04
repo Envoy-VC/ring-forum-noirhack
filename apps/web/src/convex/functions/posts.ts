@@ -33,7 +33,12 @@ export const createPost = mutation({
   args: {
     content: v.string(),
     publicKey: v.string(),
-    community: v.string(),
+    communityId: v.id('communities'),
+    signature: v.object({
+      c0: v.string(),
+      s: v.array(v.string()),
+      publicKeys: v.array(v.string()),
+    }),
   },
   handler: async (ctx, args) => {
     const user = await ctx.db
@@ -45,10 +50,7 @@ export const createPost = mutation({
       throw new Error('User not found');
     }
 
-    const community = await ctx.db
-      .query('communities')
-      .withIndex('by_name', (q) => q.eq('name', args.community))
-      .first();
+    const community = await ctx.db.get(args.communityId);
 
     if (!community) {
       throw new Error('Community not found');
@@ -71,7 +73,7 @@ export const createPost = mutation({
       content,
       tags,
       communityId: community._id,
-      signature: args.publicKey,
+      signature: args.signature,
     });
 
     for (const tag of tags) {

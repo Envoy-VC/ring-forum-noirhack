@@ -58,16 +58,23 @@ export const getPostsForCommunity = query({
   },
 });
 
-export const getTotalMembersInCommunity = query({
+export const getMembersInCommunity = query({
   args: {
     communityId: v.id('communities'),
   },
   handler: async (ctx, args) => {
-    const members = await ctx.db
+    const res = await ctx.db
       .query('communityMembers')
       .withIndex('by_community', (q) => q.eq('communityId', args.communityId))
       .collect();
-    return members.length;
+
+    const members = await Promise.all(
+      res.map(async (member) => {
+        const user = await ctx.db.get(member.userId);
+        return user;
+      })
+    );
+    return members.filter((x) => x !== null);
   },
 });
 
