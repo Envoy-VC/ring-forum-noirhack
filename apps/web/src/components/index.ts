@@ -5,3 +5,4 @@ export * from './create-post';
 export * from './latest-posts';
 export * from './post';
 export * from './join-leave';
+export * from './community-posts';

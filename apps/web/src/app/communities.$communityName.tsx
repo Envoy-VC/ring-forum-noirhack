@@ -1,13 +1,13 @@
 import { convexQuery } from '@convex-dev/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { JoinLeaveCommunity, Post } from '~/components';
+import { CommunityPosts, JoinLeaveCommunity } from '~/components';
 import { api } from '~/convex/_generated/api';
 
 const CommunityPage = () => {
   const { communityName } = Route.useParams();
 
-  const { data: community, isLoading } = useQuery(
+  const { data: community } = useQuery(
     convexQuery(api.functions.communities.getCommunity, { communityName })
   );
 
@@ -23,29 +23,7 @@ const CommunityPage = () => {
         <div className='text-foreground/60'>{community?.description}</div>
       </div>
       <div className='pt-12 pb-4 font-medium text-3xl'>Posts</div>
-      <div className='flex flex-col gap-4'>
-        <Post
-          post={{
-            content:
-              'Bitcoin rises to $1,000,000 in one day! what is going on?\n\nWhat do you think is going on? Is it a bubble?',
-            tags: ['web3', 'crypto'],
-          }}
-        />
-        <Post
-          post={{
-            content:
-              'Bitcoin rises to $1,000,000 in one day! what is going on?\n\nWhat do you think is going on? Is it a bubble?',
-            tags: ['web3', 'crypto'],
-          }}
-        />
-        <Post
-          post={{
-            content:
-              'Bitcoin rises to $1,000,000 in one day! what is going on?\n\nWhat do you think is going on? Is it a bubble?',
-            tags: ['web3', 'crypto'],
-          }}
-        />
-      </div>
+      {community && <CommunityPosts communityId={community?._id} />}
     </div>
   );
 };

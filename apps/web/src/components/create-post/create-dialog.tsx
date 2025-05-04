@@ -74,6 +74,8 @@ export const CreatePostDialog = ({
         signature,
       });
 
+      setMessage('');
+
       toast.success('Post created', { id });
     } catch (error) {
       toast.error((error as Error).message);

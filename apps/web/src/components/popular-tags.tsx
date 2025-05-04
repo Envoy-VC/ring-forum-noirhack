@@ -1,44 +1,43 @@
 'use client';
 
 import Avatar from 'avvvatars-react';
-
-const data = [
-  {
-    tag: 'web3',
-    count: 12214,
-  },
-  {
-    tag: 'crypto',
-    count: 11601,
-  },
-  {
-    tag: 'nft',
-    count: 12214,
-  },
-  {
-    tag: 'blockchain',
-    count: 10214,
-  },
-  {
-    tag: 'ethereum',
-    count: 90214,
-  },
-  {
-    tag: 'noir',
-    count: 80214,
-  },
-  {
-    tag: 'aztec',
-    count: 70214,
-  },
-];
+import { useQuery } from 'convex/react';
+import { useMemo } from 'react';
+import { api } from '~/convex/_generated/api';
 
 export const PopularTags = () => {
+  const { start, end } = useMemo(() => {
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      0,
+      0,
+      0,
+      0
+    ).getTime();
+    const tomorrow = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+      0,
+      0,
+      1,
+      0
+    ).getTime();
+
+    return { start: today, end: tomorrow };
+  }, []);
+  const tags = useQuery(api.functions.tags.getTrendingTags, {
+    startTime: start,
+    endTime: end,
+  });
   return (
     <div className='flex flex-col gap-2 rounded-3xl bg-primary px-4 py-3'>
       <div className='py-4 font-medium text-xl'>Popular Tags</div>
       <div className='flex flex-col gap-3'>
-        {data.map((tag) => {
+        {tags?.map((tag) => {
           const formattedCount = tag.count.toLocaleString('en-US');
           return (
             <div

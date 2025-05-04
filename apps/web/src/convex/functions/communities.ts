@@ -50,11 +50,24 @@ export const getPostsForCommunity = query({
     communityId: v.id('communities'),
   },
   handler: async (ctx, args) => {
+    const community = await ctx.db.get(args.communityId);
+    if (!community) {
+      throw new Error('Community not found');
+    }
     const posts = await ctx.db
       .query('posts')
       .withIndex('by_community', (q) => q.eq('communityId', args.communityId))
+      .order('desc')
       .collect();
-    return posts;
+
+    const postsWithCommunity = posts.map((post) => {
+      const { communityId, ...rest } = post;
+      return {
+        ...rest,
+        community,
+      };
+    });
+    return postsWithCommunity;
   },
 });
 
