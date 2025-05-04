@@ -73,6 +73,13 @@ export const createPost = mutation({
       communityId: community._id,
       signature: args.publicKey,
     });
+
+    for (const tag of tags) {
+      await ctx.db.insert('taggedPosts', {
+        tag,
+        postId: id,
+      });
+    }
     return id;
   },
 });

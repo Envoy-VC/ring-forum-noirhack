@@ -1,11 +1,10 @@
 import { GeistSans } from 'geist/font/sans';
 import type { Metadata } from 'next';
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import { TRPCReactProvider } from '~/trpc/react';
 
 import type { ReactNode } from 'react';
 import '@repo/ui/globals.css';
 import { Navbar } from '~/components';
+import { ProviderTree } from '~/providers';
 
 export const metadata: Metadata = {
   title: 'Create T3 App',
@@ -20,12 +19,10 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       lang='en'
     >
       <body>
-        <TRPCReactProvider>
-          <NuqsAdapter>
-            <Navbar />
-            {children}
-          </NuqsAdapter>
-        </TRPCReactProvider>
+        <ProviderTree>
+          <Navbar />
+          {children}
+        </ProviderTree>
       </body>
     </html>
   );
