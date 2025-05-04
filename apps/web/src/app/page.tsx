@@ -1,4 +1,5 @@
-import { CategorySelect, PopularTags } from '~/components';
+import { CategorySelect, CreatePost, PopularTags } from '~/components';
+import { Post } from '~/components/post';
 
 const Home = () => {
   return (
@@ -9,7 +10,30 @@ const Home = () => {
           <PopularTags />
         </div>
       </div>
-      <div className='flex w-full basis-3/4 border'>content</div>
+      <div className='flex h-fit w-full basis-2/4 flex-col gap-4'>
+        <CreatePost />
+        <div className='flex flex-col gap-4'>
+          <Post
+            post={{
+              content:
+                'Bitcoin rises to $1,000,000 in one day! what is going on?\n\nWhat do you think is going on? Is it a bubble?',
+              tags: ['web3', 'crypto'],
+            }}
+          />
+          <Post
+            post={{
+              content:
+                'Bitcoin rises to $1,000,000 in one day! what is going on?\n\nWhat do you think is going on? Is it a bubble?',
+              tags: ['web3', 'crypto'],
+            }}
+          />
+        </div>
+      </div>
+      <div className='flex w-full basis-1/4'>
+        <div className='mx-auto flex w-full max-w-xs flex-col gap-8'>
+          <PopularTags />
+        </div>
+      </div>
     </div>
   );
 };

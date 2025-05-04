@@ -49,6 +49,7 @@ export const PopularTags = () => {
                 value={tag.tag}
                 size={42}
                 style='shape'
+                radius={12}
               />
               <div className='flex flex-col'>
                 <div className='font-medium text-base'>#{tag.tag}</div>
