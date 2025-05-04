@@ -51,3 +51,84 @@ export const getTotalMembersInCommunity = query({
     return members.length;
   },
 });
+
+export const joinCommunity = mutation({
+  args: {
+    community: v.string(),
+    publicKey: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query('users')
+      .withIndex('by_public_key', (q) => q.eq('publicKey', args.publicKey))
+      .first();
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const community = await ctx.db
+      .query('communities')
+      .withIndex('by_name', (q) => q.eq('name', args.community))
+      .first();
+
+    if (!community) {
+      throw new Error('Community not found');
+    }
+
+    const isMember = await ctx.db
+      .query('communityMembers')
+      .withIndex('by_user_and_community', (q) =>
+        q.eq('userId', user._id).eq('communityId', community._id)
+      )
+      .first();
+
+    if (isMember) {
+      throw new Error('User is already a member of the community');
+    }
+
+    await ctx.db.insert('communityMembers', {
+      userId: user._id,
+      communityId: community._id,
+    });
+  },
+});
+
+export const leaveCommunity = mutation({
+  args: {
+    community: v.string(),
+    publicKey: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query('users')
+      .withIndex('by_public_key', (q) => q.eq('publicKey', args.publicKey))
+      .first();
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const community = await ctx.db
+      .query('communities')
+      .withIndex('by_name', (q) => q.eq('name', args.community))
+      .first();
+
+    if (!community) {
+      throw new Error('Community not found');
+    }
+
+    const isMember = await ctx.db
+      .query('communityMembers')
+      .withIndex('by_user_and_community', (q) =>
+        q.eq('userId', user._id).eq('communityId', community._id)
+      )
+      .first();
+
+    if (!isMember) {
+      throw new Error('User is not a member of the community');
+    }
+
+    await ctx.db.delete(isMember._id);
+  },
+});
