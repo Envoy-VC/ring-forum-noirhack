@@ -36,21 +36,11 @@ export default defineConfig({
   ],
   optimizeDeps: {
     esbuildOptions: {
-      define: {
-        global: 'globalThis',
-      },
-      plugins: [],
+      target: 'esnext',
+      sourcemap: true,
+      minify: false,
     },
-    include: [
-      '@aztec/aztec.js',
-      '@aztec/bb.js',
-      'buffer',
-      'process',
-      'stream',
-      'crypto-browserify',
-      'readable-stream',
-      'assert',
-    ],
+    include: ['@aztec/aztec.js', '@aztec/bb.js'],
     exclude: ['@noir-lang/noir_js', '@noir-lang/noirc_abi'],
   },
   server: { port: 3000 },
@@ -64,10 +54,6 @@ export default defineConfig({
       '~': path.resolve(__dirname, './src'),
       public: path.resolve(__dirname, './public'),
       buffer: 'buffer',
-      process: 'process/browser',
-      stream: 'stream-browserify',
-      crypto: 'crypto-browserify',
-      assert: 'assert',
     },
   },
 });
