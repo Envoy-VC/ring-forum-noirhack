@@ -30,6 +30,16 @@
       }
     },
     {
+      "include": ["apps/web/src/app/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
       "include": ["apps/web/src/env.js"],
       "linter": {
         "rules": {
