@@ -32,6 +32,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@aztec/aztec.js':
+        specifier: ^0.86.0
+        version: 0.86.0(typescript@5.8.3)(zod@3.24.3)
       '@convex-dev/aggregate':
         specifier: ^0.1.20
         version: 0.1.20(convex@1.24.0(react@19.1.0))
@@ -5219,8 +5222,8 @@ snapshots:
   ox@0.6.7(typescript@5.8.3)(zod@3.24.3):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.8.1
-      '@noble/hashes': 1.7.1
+      '@noble/curves': 1.9.0
+      '@noble/hashes': 1.8.0
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
       abitype: 1.0.8(typescript@5.8.3)(zod@3.24.3)
