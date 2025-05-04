@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Input } from '@repo/ui/components/input';
 
 import Logo from 'public/logo.png';
+import { CreateCommunity } from '../create-community';
 import { SearchIcon } from '../icons';
 import { CreateAccount } from './create-account';
 import { NavItems } from './nav-items';
@@ -40,7 +41,10 @@ export const Navbar = () => {
             />
           </div>
         </div>
-        <CreateAccount />
+        <div className='flex flex-row items-center gap-2'>
+          <CreateCommunity />
+          <CreateAccount />
+        </div>
       </div>
     </div>
   );
