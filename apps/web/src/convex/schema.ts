@@ -25,7 +25,11 @@ const schema = defineSchema(
       content: v.string(),
       tags: v.array(v.string()),
       communityId: v.id('communities'),
-      signature: v.string(),
+      signature: v.object({
+        c0: v.string(),
+        s: v.array(v.string()),
+        publicKeys: v.array(v.string()),
+      }),
     }).index('by_community', ['communityId']),
     taggedPosts: defineTable({
       tag: v.string(),

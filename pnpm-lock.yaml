@@ -35,9 +35,15 @@ importers:
       '@aztec/aztec.js':
         specifier: ^0.86.0
         version: 0.86.0(typescript@5.8.3)(zod@3.24.3)
+      '@aztec/foundation':
+        specifier: ^0.86.0
+        version: 0.86.0
       '@convex-dev/react-query':
         specifier: 0.0.0-alpha.8
         version: 0.0.0-alpha.8(@tanstack/react-query@5.75.1(react@19.1.0))(convex@1.24.0(react@19.1.0))
+      '@noir-lang/noir_js':
+        specifier: 1.0.0-beta.3
+        version: 1.0.0-beta.3
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -89,6 +95,9 @@ importers:
       sonner:
         specifier: ^2.0.3
         version: 2.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      uint8arrays:
+        specifier: ^5.1.0
+        version: 5.1.0
       usehooks-ts:
         specifier: ^3.1.0
         version: 3.1.1(react@19.1.0)
@@ -3125,6 +3134,9 @@ packages:
   msgpackr@1.11.2:
     resolution: {integrity: sha512-F9UngXRlPyWCDEASDpTf6c9uNhGPTqnTeLVt7bN+bU1eajoR/8V9ys2BRaV5C/e5ihE6sJ9uPIKaYt6bFuO32g==}
 
+  multiformats@13.3.2:
+    resolution: {integrity: sha512-qbB0CQDt3QKfiAzZ5ZYjLFOs+zW43vA4uyM8g27PeEuXZybUOFyjrVdP93HPBHMoglibwfkdVwbzfUq8qGcH6g==}
+
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -3901,6 +3913,9 @@ packages:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  uint8arrays@5.1.0:
+    resolution: {integrity: sha512-vA6nFepEmlSKkMBnLBaUMVvAC4G3CTmO58C12y4sq6WPDOR7mOFYOi7GlrQ4djeSbP6JG9Pv9tJDM97PedRSww==}
 
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
@@ -7115,6 +7130,8 @@ snapshots:
     optionalDependencies:
       msgpackr-extract: 3.0.3
 
+  multiformats@13.3.2: {}
+
   nanoid@3.3.11: {}
 
   nanoid@3.3.8: {}
@@ -7922,6 +7939,10 @@ snapshots:
       mime-types: 2.1.35
 
   typescript@5.8.3: {}
+
+  uint8arrays@5.1.0:
+    dependencies:
+      multiformats: 13.3.2
 
   undici-types@6.21.0: {}
 

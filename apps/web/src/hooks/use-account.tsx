@@ -2,7 +2,7 @@ import { generateKeyPair } from '@zkpersona/noir-ring-signatures';
 import { useMemo } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { Fr, Point } from '@aztec/aztec.js';
+import { Fq, Point } from '@aztec/aztec.js';
 import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 
@@ -22,7 +22,7 @@ export const useAccount = () => {
     if (!keyPair) return null;
     return {
       publicKey: Point.fromString(keyPair.publicKey),
-      privateKey: Fr.fromHexString(keyPair.privateKey),
+      privateKey: Fq.fromHexString(keyPair.privateKey),
     };
   }, [keyPair]);
 
