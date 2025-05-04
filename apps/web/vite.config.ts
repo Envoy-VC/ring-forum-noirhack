@@ -28,6 +28,7 @@ export default defineConfig({
     topLevelAwait(),
     TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
     react(),
+    wasmContentTypePlugin,
     tailwindcss(),
     nodePolyfills({
       protocolImports: true,
@@ -42,6 +43,7 @@ export default defineConfig({
     },
     include: [
       '@aztec/aztec.js',
+      '@aztec/bb.js',
       'buffer',
       'process',
       'stream',
@@ -49,6 +51,7 @@ export default defineConfig({
       'readable-stream',
       'assert',
     ],
+    exclude: ['@noir-lang/noir_js', '@noir-lang/noirc_abi'],
   },
   server: { port: 3000 },
   publicDir: 'public',

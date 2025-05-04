@@ -91,7 +91,18 @@ export const getLatestPosts = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const posts = await ctx.db.query('posts').take(args.limit ?? 10);
-    return posts;
+    const posts = await ctx.db.query('posts').take(args.limit ?? 5);
+    const postsWithCommunity = await Promise.all(
+      posts.map(async (post) => {
+        const community = await ctx.db.get(post.communityId);
+        if (!community) throw new Error('Community not found');
+        const { communityId, ...rest } = post;
+        return {
+          ...rest,
+          community,
+        };
+      })
+    );
+    return postsWithCommunity;
   },
 });

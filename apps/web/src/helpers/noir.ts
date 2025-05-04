@@ -131,4 +131,6 @@ export const verifyMembership = async (
   );
 
   const proof = await prover.fullProve(toCircuitInputs(inputs));
+
+  return proof;
 };
