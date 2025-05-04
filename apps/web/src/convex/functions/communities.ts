@@ -38,3 +38,16 @@ export const getPostsForCommunity = query({
     return posts;
   },
 });
+
+export const getTotalMembersInCommunity = query({
+  args: {
+    communityId: v.id('communities'),
+  },
+  handler: async (ctx, args) => {
+    const members = await ctx.db
+      .query('communityMembers')
+      .withIndex('by_community', (q) => q.eq('communityId', args.communityId))
+      .collect();
+    return members.length;
+  },
+});
