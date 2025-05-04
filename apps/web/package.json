@@ -20,6 +20,7 @@
     "@trpc/client": "^11.1.2",
     "@trpc/react-query": "^11.1.2",
     "@trpc/server": "^11.1.2",
+    "avvvatars-react": "^0.4.2",
     "geist": "^1.4.1",
     "lucide-react": "^0.507.0",
     "motion": "^12.9.4",

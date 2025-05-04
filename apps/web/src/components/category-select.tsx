@@ -32,7 +32,7 @@ export const CategorySelect = () => {
   );
 
   return (
-    <div className='flex w-full max-w-xs flex-col items-center gap-2 rounded-xl bg-primary p-3'>
+    <div className='flex w-full flex-col items-center gap-2 rounded-3xl bg-primary p-3'>
       {categories.map((category) => (
         // biome-ignore lint/nursery/noStaticElementInteractions: <explanation>
         // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
@@ -42,7 +42,7 @@ export const CategorySelect = () => {
             setCategory(category.id as Category);
           }}
           className={cn(
-            'flex w-full cursor-pointer flex-row items-start gap-2 rounded-lg px-3 py-3',
+            'flex w-full cursor-pointer flex-row items-start gap-2 rounded-2xl px-3 py-3',
             category.id === currentCategory ? 'bg-white/10' : ''
           )}
         >
