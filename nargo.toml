@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "crates/sag_8",
+    "crates/sag_16",
+    "crates/sag_32",
+    "crates/sag_64",
+    "crates/sag_128",
+    "crates/sag_256",
+    "crates/sag_512",
+]
+default-member = "crates/sag_8"

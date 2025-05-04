@@ -39,3 +39,16 @@ yarn-error.log*
 
 # husky
 .husky/_
+
+
+# Noir Targets
+target
+
+# Noir Exports
+export
+
+# generated
+__generated__
+
+# benchmark
+gates_report.json
