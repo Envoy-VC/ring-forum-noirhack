@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import Avvvatars from 'avvvatars-react';
 import type { PostWithCommunity } from '~/types';
 import { VerifyPost } from './verify';
@@ -8,7 +9,11 @@ export const Post = ({ post }: { post: PostWithCommunity }) => {
       <div className='absolute right-4 bottom-4'>
         <VerifyPost post={post} />
       </div>
-      <div className='flex flex-row items-center gap-2'>
+      <Link
+        to='/communities/$communityName'
+        params={{ communityName: post.community.name }}
+        className='flex flex-row items-center gap-2'
+      >
         <Avvvatars
           value={post.community.name}
           size={16}
@@ -17,7 +22,7 @@ export const Post = ({ post }: { post: PostWithCommunity }) => {
         <div className='font-medium text-base text-cyan-300'>
           r/{post.community.name}
         </div>
-      </div>
+      </Link>
       <div className='text-foreground text-lg'>{post.content}</div>
       <div className='flex flex-row items-center gap-2'>
         {post.tags.map((tag) => (

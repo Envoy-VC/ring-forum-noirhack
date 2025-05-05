@@ -165,3 +165,16 @@ export const leaveCommunity = mutation({
     await ctx.db.delete(isMember._id);
   },
 });
+
+export const getCommunities = query({
+  args: {
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const communities = await ctx.db
+      .query('communities')
+      .take(args.limit ?? 10);
+
+    return communities;
+  },
+});

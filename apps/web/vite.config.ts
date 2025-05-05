@@ -29,11 +29,7 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: { target: 'esnext', minify: false, sourcemap: true },
     include: [''],
-    exclude: [
-      '@noir-lang/noirc_abi',
-      '@noir-lang/acvm_js',
-      '@aztec/foundation',
-    ],
+    exclude: ['@noir-lang/noirc_abi', '@noir-lang/acvm_js'],
   },
   build: {
     rollupOptions: {

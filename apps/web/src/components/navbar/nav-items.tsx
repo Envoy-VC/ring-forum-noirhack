@@ -8,22 +8,27 @@ const navLinks = [
   {
     title: 'Home',
     href: '/',
+    regex: /^\/$/,
     icon: HomeIcon,
   },
   {
     title: 'Communities',
     href: '/communities',
+    // regex for /communities/*
+    regex: /^\/communities\/(.*)$/,
     icon: UsersIcon,
   },
   {
     title: 'Podcasts',
     href: '/',
+    regex: /^\/podcasts\/?$/,
     icon: AudioLinesIcon,
     disabled: true,
   },
   {
     title: 'Trending',
     href: '/',
+    regex: /^\/trending\/?$/,
     icon: TrendingUpIcon,
     disabled: true,
   },
@@ -43,7 +48,7 @@ export const NavItems = () => {
             key={link.title}
             className={cn(
               '!p-0 !m-0 !size-9 flex items-center justify-center rounded-lg transition-colors duration-200 hover:bg-accent',
-              path.href === link.href && !link.disabled && 'bg-accent'
+              link.regex.test(path.pathname) && !link.disabled && 'bg-accent'
             )}
           >
             <Icon size={20} />
