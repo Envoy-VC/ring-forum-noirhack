@@ -2,24 +2,12 @@ import path from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
-import { type Plugin, defineConfig } from 'vite';
+import { defineConfig } from 'vite';
 
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 import topLevelAwait from 'vite-plugin-top-level-await';
 import wasm from 'vite-plugin-wasm';
-
-const wasmContentTypePlugin: Plugin = {
-  name: 'wasm-content-type-plugin',
-  configureServer(server) {
-    server.middlewares.use((req, res, next) => {
-      if (req.url?.endsWith('.wasm')) {
-        res.setHeader('Content-Type', 'application/wasm');
-      }
-      next();
-    });
-  },
-};
 
 export default defineConfig({
   envPrefix: ['VITE_'],
@@ -28,32 +16,43 @@ export default defineConfig({
     topLevelAwait(),
     TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
     react(),
-    wasmContentTypePlugin,
     tailwindcss(),
-    nodePolyfills({
-      protocolImports: true,
-    }),
+    nodePolyfills({ protocolImports: true }),
   ],
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'esnext',
-      sourcemap: true,
-      minify: false,
+  server: {
+    port: 3000,
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
     },
-    include: ['@aztec/aztec.js', '@aztec/bb.js'],
-    exclude: ['@noir-lang/noir_js', '@noir-lang/noirc_abi'],
   },
-  server: { port: 3000 },
+  optimizeDeps: {
+    esbuildOptions: { target: 'esnext', minify: false, sourcemap: true },
+    include: [''],
+    exclude: [
+      '@noir-lang/noirc_abi',
+      '@noir-lang/acvm_js',
+      '@aztec/foundation',
+    ],
+  },
+  build: {
+    rollupOptions: {
+      treeshake: false, // disable tree-shaking globally (not recommended)
+      output: {
+        manualChunks: undefined, // prevent code splitting (optional)
+      },
+    },
+    commonjsOptions: {
+      include: [/node_modules/], // ensure CommonJS modules are preserved
+    },
+    target: 'esnext',
+    minify: false,
+  },
   publicDir: 'public',
-  define: {
-    'process.env': {},
-    'process.browser': true,
-  },
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src'),
       public: path.resolve(__dirname, './public'),
-      buffer: 'buffer',
     },
   },
 });

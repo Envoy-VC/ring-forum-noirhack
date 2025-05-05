@@ -1,8 +1,8 @@
-import { generateKeyPair } from '@zkpersona/noir-ring-signatures';
 import { useMemo } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { Fq, Point } from '@aztec/aztec.js';
+import { Grumpkin } from '@aztec/foundation/crypto';
+import { Fq, Point } from '@aztec/foundation/fields';
 import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 
@@ -27,13 +27,17 @@ export const useAccount = () => {
   }, [keyPair]);
 
   const createAccount = async () => {
-    const keyPair = await generateKeyPair();
-    await createUser({
-      publicKey: keyPair.publicKey.toString(),
-    });
+    const priv = Fq.random();
+    const Curve = new Grumpkin();
+    const pub = await Curve.mul(Grumpkin.generator, priv);
+
     setKeyPair({
-      publicKey: keyPair.publicKey.toString(),
-      privateKey: keyPair.privateKey.toString(),
+      publicKey: pub.toString(),
+      privateKey: priv.toString(),
+    });
+
+    await createUser({
+      publicKey: pub.toString(),
     });
   };
 

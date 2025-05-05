@@ -9,7 +9,7 @@ import {
 
 import { concat } from 'uint8arrays';
 
-import { Fr } from '@aztec/aztec.js';
+import { Fr } from '@aztec/foundation/fields';
 import { Button } from '@repo/ui/components/button';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';

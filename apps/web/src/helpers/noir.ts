@@ -1,13 +1,10 @@
+import os from 'node:os';
+import { pedersenHashBuffer } from '@aztec/foundation/crypto';
+import { Fq, Fr, Point } from '@aztec/foundation/fields';
 import type { CompiledCircuit } from '@noir-lang/noir_js';
-import type { RingSignature } from '@zkpersona/noir-ring-signatures';
+import { Prover, toCircuitInputs } from '@zkpersona/noir-helpers';
 import { sagToNoirInputs, sign } from '@zkpersona/noir-ring-signatures/sag';
 
-import { pedersenHashBuffer } from '@aztec/foundation/crypto';
-
-import os from 'node:os';
-
-import { Fq, Fr, Point } from '@aztec/aztec.js';
-import { Prover, toCircuitInputs } from '@zkpersona/noir-helpers';
 import sag8 from 'public/circuits/sag_8.json';
 import sag16 from 'public/circuits/sag_16.json';
 import sag32 from 'public/circuits/sag_32.json';
@@ -18,6 +15,12 @@ export interface SerializedRingSignature {
   c0: string;
   s: string[];
   publicKeys: string[];
+}
+
+interface RingSignature {
+  c0: Fq;
+  s: Fq[];
+  publicKeys: Point[];
 }
 
 export const serializeSignature = (signature: RingSignature) => {
@@ -94,9 +97,11 @@ export const signMessage = async ({
   if (signerIndex === -1) {
     throw new Error('User is not a member');
   }
-  const messageFr = Fr.fromBuffer(
-    await pedersenHashBuffer(Buffer.from(message))
-  );
+
+  const messageHash = await pedersenHashBuffer(Buffer.from(message));
+
+  const messageFr = Fr.fromBuffer(messageHash);
+  console.log(messageFr);
 
   const signature = await sign(
     messageFr,
